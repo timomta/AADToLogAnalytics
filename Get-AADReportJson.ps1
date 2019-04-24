@@ -6,10 +6,10 @@
     [string]$ClientSecret, # Should be a ~44 character string insert your info here
 
     [Parameter(Mandatory=$true)]
-    [string]$tenantdomain, # For example, contoso.onmicrosoft.com
+    [string]$TenantDomain, # For example, contoso.onmicrosoft.com
 
     [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-    [string]$earliestRecordDate, # Only log records later than this date will be requested (format yyyy-mm-ddThh:mm:ssZ)
+    [string]$EarliestRecordDate, # Only log records later than this date will be requested (format yyyy-mm-ddThh:mm:ssZ)
     
     [Parameter(Mandatory=$true)]
     [ValidateSet("Audit","User")]
@@ -22,20 +22,20 @@ $resource = "https://graph.microsoft.com"
 switch($LogType)
 {
     Audit {
-        $URIfilter = "directoryAudits?`$filter=activityDateTime gt $earliestRecordDate"
+        $URIfilter = "directoryAudits?`$filter=activityDateTime gt $EarliestRecordDate"
         Break 
     }
     User {
-        $URIfilter = "signIns?`$filter=createdDateTime gt $earliestRecordDate" 
+        $URIfilter = "signIns?`$filter=createdDateTime gt $EarliestRecordDate" 
         Break
     }
 }
 
-Write-Output "Searching the tenant $tenantdomain for AAD $LogType events after $PastPeriod"
+Write-Output "Searching the tenant $TenantDomain for AAD $LogType events after $EarliestRecordDate"
 
 $url = "https://graph.microsoft.com/beta/auditLogs/" + $URIfilter
 $body       = @{grant_type="client_credentials";resource=$resource;client_id=$ClientID;client_secret=$ClientSecret}
-$oauth      = Invoke-RestMethod -Method POST -Uri $loginURL/$tenantdomain/oauth2/token?api-version=1.0 -Body $body
+$oauth      = Invoke-RestMethod -Method POST -Uri $loginURL/$TenantDomain/oauth2/token?api-version=1.0 -Body $body
 if ($oauth.access_token -ne $null)
 {
     $headerParams = @{'Authorization'="$($oauth.token_type) $($oauth.access_token)"}

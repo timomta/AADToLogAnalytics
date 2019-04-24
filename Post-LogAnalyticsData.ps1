@@ -6,13 +6,13 @@
     [string]$WorkspaceKey, # Log Analytics workspace key
 
     [Parameter(Mandatory=$true)]
-    [string]$LogType, # Name of the Log Analyics log to push the data to
+    [string]$LogName, # Name of the Log Analyics log to push the data to
 
     [Parameter(Mandatory=$true)]
     [string]$TimeStampField, # Name of the field in the json content to be used in the Log Analytics timestamp field
 
     [Parameter(Mandatory=$true)]
-    [string]$jsonLogFile # JSON formatted records to put in the Log Analytics log 
+    [string]$JsonLogFile # JSON formatted records to put in the Log Analytics log 
 )
 
 
@@ -64,7 +64,7 @@ Function Post-LogAnalyticsData($customerId, $sharedKey, $body, $logType)
 
 }
 
-$jsonLogContent = Get-Content $jsonLogFile
+$jsonLogContent = Get-Content $JsonLogFile
 
 # Submit the data to the API endpoint
-Post-LogAnalyticsData -customerId $WorkspaceId -sharedKey $WorkspaceKey -body ([System.Text.Encoding]::UTF8.GetBytes($jsonLogContent)) -logType $logType
+Post-LogAnalyticsData -customerId $WorkspaceId -sharedKey $WorkspaceKey -body ([System.Text.Encoding]::UTF8.GetBytes($jsonLogContent)) -logType $LogName
