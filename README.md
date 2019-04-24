@@ -47,8 +47,9 @@ PS C:\Source\Repos\AADToLogAnalytics>
 ```
 
 Next run Get-AADReportJson to pull down the report you want from AAD. You will have to already have an application Id created in AAD and its corresponding secret. Note that the date returned the above run is used.
-Please see https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-configure-prerequisites-for-reporting-api#grant-permissions
-https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-reporting-api#execute-the-script
+Please see
+ - https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-configure-prerequisites-for-reporting-api#grant-permissions
+ - https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-reporting-api#execute-the-script
 
 ```
 PS C:\Source\Repos\AADToLogAnalytics> .\Get-AADReportJson.ps1 -ClientId 12345678-a762-4249-93ee-79cfb527e2ac -ClientSecret ORZQWAsGREATbIGsECRETegGFDmwYRWslih1nM= -tenantdomain contoso.onmicrosoft.com -LogType User -earliestRecordDate 2019-04-18T23:36:26.407Z
