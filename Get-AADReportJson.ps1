@@ -31,7 +31,7 @@ switch($LogType)
     }
 }
 
-Write-Output "Searching the tenant $Tenantname for AAD $LogType events after $PastPeriod"
+Write-Output "Searching the tenant $tenantdomain for AAD $LogType events after $PastPeriod"
 
 $url = "https://graph.microsoft.com/beta/auditLogs/" + $URIfilter
 $body       = @{grant_type="client_credentials";resource=$resource;client_id=$ClientID;client_secret=$ClientSecret}
